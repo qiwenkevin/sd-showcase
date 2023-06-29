@@ -4,6 +4,17 @@ import { setSettings as setTxt2imgSettings } from "../redux/Features/Txt2imgStat
 import { setSettings as setImg2imgSettings } from "../redux/Features/Img2imgState/Img2imgSlice";
 import { use, useEffect, useState } from "react";
 
+import { Select } from "@chakra-ui/react";
+import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
+import { Stack, HStack, VStack } from "@chakra-ui/react";
+import {
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+} from "@chakra-ui/react";
+
 const samplingMethodOptions = [
   {
     name: "Euler a",
@@ -155,32 +166,28 @@ export const CommonInput = ({ mode }: { mode: number }) => {
   }, [settings]);
 
   return (
-    <div>
-      <div>
-        <label htmlFor="samplingMethod">Sampling Method</label>
-        <select
-          name="samplingMethod"
-          id="samplingMethod"
-          value={samplingMethod}
-          onChange={(e) => {
-            setSamplingMethod(e.target.value);
-            dispatch(
-              setSettings({ ...settings, sampler_index: e.target.value })
-            );
-          }}
-        >
-          {samplingMethodOptions.map((option) => (
-            <option value={option.name} key={option.name}>
-              {option.name}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="steps">Steps</label>
-        <input
-          type="number"
+    <Stack maxW={700}>
+      <label htmlFor="samplingMethod">Sampling Method</label>
+      <Select
+        name="samplingMethod"
+        id="samplingMethod"
+        value={samplingMethod}
+        onChange={(e) => {
+          setSamplingMethod(e.target.value);
+          dispatch(setSettings({ ...settings, sampler_index: e.target.value }));
+        }}
+      >
+        {samplingMethodOptions.map((option) => (
+          <option value={option.name} key={option.name}>
+            {option.name}
+          </option>
+        ))}
+      </Select>
+      <NumberInput defaultValue={steps}>
+        Steps
+        <NumberInputField
           name="steps"
           id="steps"
-          value={steps}
           onChange={(e) => {
             setSteps(parseInt(e.target.value));
             dispatch(
@@ -188,10 +195,9 @@ export const CommonInput = ({ mode }: { mode: number }) => {
             );
           }}
         />
-      </div>
-      <div>
-        <input
-          type="checkbox"
+      </NumberInput>
+      <HStack>
+        <Checkbox
           name="restoreFase"
           id="restoreFase"
           checked={restoreFase}
@@ -201,10 +207,10 @@ export const CommonInput = ({ mode }: { mode: number }) => {
               setSettings({ ...settings, restore_faces: e.target.checked })
             );
           }}
-        />
-        <label htmlFor="restoreFase">Restore Fase</label>
-        <input
-          type="checkbox"
+        >
+          Restore Face
+        </Checkbox>
+        <Checkbox
           name="tiling"
           id="tiling"
           checked={tiling}
@@ -212,44 +218,50 @@ export const CommonInput = ({ mode }: { mode: number }) => {
             setTiling(e.target.checked);
             dispatch(setSettings({ ...settings, tiling: e.target.checked }));
           }}
-        />
-        <label htmlFor="tiling">Tiling</label>
-      </div>
-      <div>
-        <label htmlFor="height">Height</label>
-        <input
-          type="number"
-          name="height"
-          id="height"
-          value={height}
-          onChange={(e) => {
-            setHeight(parseInt(e.target.value));
-            dispatch(
-              setSettings({ ...settings, height: parseInt(e.target.value) })
-            );
-          }}
-        />
-        <label htmlFor="width">Width</label>
-        <input
-          type="number"
-          name="width"
-          id="width"
-          value={width}
-          onChange={(e) => {
-            setWidth(parseInt(e.target.value));
-            dispatch(
-              setSettings({ ...settings, width: parseInt(e.target.value) })
-            );
-          }}
-        />
-      </div>
-      <div>
-        <label htmlFor="batchCount">Batch Count</label>
-        <input
+        >
+          Tiling
+        </Checkbox>
+      </HStack>
+      <HStack>
+        <NumberInput defaultValue={height}>
+          Height
+          <NumberInputField
+            name="height"
+            id="height"
+            onChange={(e) => {
+              setHeight(parseInt(e.target.value));
+              dispatch(
+                setSettings({
+                  ...settings,
+                  height: parseInt(e.target.value),
+                })
+              );
+            }}
+          />
+        </NumberInput>
+        <NumberInput defaultValue={width}>
+          Width
+          <NumberInputField
+            name="width"
+            id="width"
+            onChange={(e) => {
+              setWidth(parseInt(e.target.value));
+              dispatch(
+                setSettings({
+                  ...settings,
+                  width: parseInt(e.target.value),
+                })
+              );
+            }}
+          />
+        </NumberInput>
+      </HStack>
+      <NumberInput defaultValue={batchCount}>
+        Batch Count
+        <NumberInputField
           type="number"
           name="batchCount"
           id="batchCount"
-          value={batchCount}
           onChange={(e) => {
             setBatchCount(parseInt(e.target.value));
             dispatch(
@@ -260,76 +272,76 @@ export const CommonInput = ({ mode }: { mode: number }) => {
             );
           }}
         />
-        <label htmlFor="batchSize">Batch Size</label>
-        <input
+      </NumberInput>
+      <NumberInput defaultValue={batchSize}>
+        Batch Size
+        <NumberInputField
           type="number"
           name="batchSize"
           id="batchSize"
-          value={batchSize}
           onChange={(e) => {
             setBatchSize(parseInt(e.target.value));
             dispatch(
-              setSettings({ ...settings, batch_size: parseInt(e.target.value) })
+              setSettings({
+                ...settings,
+                batch_size: parseInt(e.target.value),
+              })
             );
           }}
         />
+      </NumberInput>
+      <label htmlFor="cfg">CFG scale</label>
+      <input
+        type="number"
+        name="cfg"
+        id="cfg"
+        value={cfg}
+        onChange={(e) => {
+          setCfg(parseInt(e.target.value));
+          dispatch(
+            setSettings({
+              ...settings,
+              cfg_scale: parseInt(e.target.value),
+            })
+          );
+        }}
+      />
+      {mode == 1 && (
         <div>
-          <label htmlFor="cfg">CFG scale</label>
+          <label htmlFor="denoising">Denoising strength</label>
           <input
             type="number"
-            name="cfg"
-            id="cfg"
-            value={cfg}
+            name="denoising"
+            id="denoising"
+            value={denoising}
             onChange={(e) => {
-              setCfg(parseInt(e.target.value));
+              setDenoising(parseFloat(e.target.value));
               dispatch(
                 setSettings({
                   ...settings,
-                  cfg_scale: parseInt(e.target.value),
+                  denoising_strength: parseFloat(e.target.value),
                 })
               );
             }}
           />
         </div>
-        {mode == 1 && (
-          <div>
-            <label htmlFor="denoising">Denoising strength</label>
-            <input
-              type="number"
-              name="denoising"
-              id="denoising"
-              value={denoising}
-              onChange={(e) => {
-                setDenoising(parseFloat(e.target.value));
-                dispatch(
-                  setSettings({
-                    ...settings,
-                    denoising_strength: parseFloat(e.target.value),
-                  })
-                );
-              }}
-            />
-          </div>
-        )}
-      </div>
-      <div>
-        <label htmlFor="seeds">Seeds</label>
-        <input
-          type="number"
-          name="seeds"
-          id="seeds"
-          value={seeds}
-          onChange={(e) => {
-            setSeeds(parseInt(e.target.value));
-            dispatch(
-              setSettings({
-                ...settings,
-                seed: parseInt(e.target.value),
-              })
-            );
-          }}
-        />
-      </div>
-    </div>
+      )}
+      <label htmlFor="seeds">Seeds</label>
+      <input
+        type="number"
+        name="seeds"
+        id="seeds"
+        value={seeds}
+        onChange={(e) => {
+          setSeeds(parseInt(e.target.value));
+          dispatch(
+            setSettings({
+              ...settings,
+              seed: parseInt(e.target.value),
+            })
+          );
+        }}
+      />
+    </Stack>
   );
 };

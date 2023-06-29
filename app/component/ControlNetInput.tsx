@@ -5,6 +5,9 @@ import { useSelector } from "../hook/useSelector.hook";
 import { setSettings as setTxt2imgSettings } from "../redux/Features/Txt2imgState/Txt2imgSlice";
 import { setSettings as setImg2imgSettings } from "../redux/Features/Img2imgState/Img2imgSlice";
 
+import { Select } from '@chakra-ui/react'
+
+
 const modules = [
   "none",
   "canny",
@@ -130,7 +133,7 @@ export const ControlNetInput = ({ mode }: { mode: number }) => {
       />
       {isEnabled && (
         <>
-          <select
+          <Select
             value={moduleSelected}
             onChange={(e) => setModuleSelected(e.target.value)}
           >
@@ -139,9 +142,9 @@ export const ControlNetInput = ({ mode }: { mode: number }) => {
                 {module}
               </option>
             ))}
-          </select>
+          </Select>
 
-          <select
+          <Select
             value={modelSelected}
             onChange={(e) => setModelSelected(e.target.value)}
           >
@@ -150,7 +153,7 @@ export const ControlNetInput = ({ mode }: { mode: number }) => {
                 {model}
               </option>
             ))}
-          </select>
+          </Select>
           <ImageMaskCanvas
             imageHandler={imageHandler}
             imageSizeHandler={imageSizeHandler}

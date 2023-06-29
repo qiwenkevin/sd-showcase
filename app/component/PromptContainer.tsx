@@ -4,6 +4,9 @@ import { setSettings as setTxt2imgSettings } from "../redux/Features/Txt2imgStat
 import { setSettings as setImg2imgSettings } from "../redux/Features/Img2imgState/Img2imgSlice";
 import { useEffect, useState } from "react";
 
+import { Textarea } from "@chakra-ui/react";
+import { Stack, HStack, VStack } from "@chakra-ui/react";
+
 interface PromptContainerProps {
   mode: number;
   display?: boolean | true;
@@ -55,16 +58,16 @@ export const PromptContainer = (props: PromptContainerProps) => {
 
   return (
     <div>
-      <div>
-        <label htmlFor="prompt">Prompt</label>
-        <textarea value={prompt} onChange={handleChange} />
-      </div>
-      {display && (
+      <VStack align={"left"} maxW={800}>
+        <div>
+          <label htmlFor="prompt">Prompt</label>
+          <Textarea value={prompt} onChange={handleChange} />
+        </div>
         <div>
           <label htmlFor="negative_prompt">Negative Prompt</label>
-          <textarea value={negative_prompt} onChange={handleNegativeChange} />
+          <Textarea value={negative_prompt} onChange={handleNegativeChange} />
         </div>
-      )}
+      </VStack>
     </div>
   );
 };

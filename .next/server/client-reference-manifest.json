@@ -56,9 +56,9 @@
         "async": false
       }
     },
-    "(app-client)/./app/component/Img2imgImageInput.tsx": {
+    "(app-client)/./app/redux/Features/ExtraState/ExtraSlice.ts": {
       "*": {
-        "id": "(sc_client)/./app/component/Img2imgImageInput.tsx",
+        "id": "(sc_client)/./app/redux/Features/ExtraState/ExtraSlice.ts",
         "name": "*",
         "chunks": [],
         "async": false
@@ -80,22 +80,6 @@
         "async": false
       }
     },
-    "(app-client)/./app/sd/page.tsx": {
-      "*": {
-        "id": "(sc_client)/./app/sd/page.tsx",
-        "name": "*",
-        "chunks": [],
-        "async": false
-      }
-    },
-    "(app-client)/./app/redux/Features/ExtraState/ExtraSlice.ts": {
-      "*": {
-        "id": "(sc_client)/./app/redux/Features/ExtraState/ExtraSlice.ts",
-        "name": "*",
-        "chunks": [],
-        "async": false
-      }
-    },
     "(app-client)/./app/redux/provider.tsx": {
       "*": {
         "id": "(sc_client)/./app/redux/provider.tsx",
@@ -107,6 +91,14 @@
     "(app-client)/./app/redux/store.ts": {
       "*": {
         "id": "(sc_client)/./app/redux/store.ts",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./app/sd/page.tsx": {
+      "*": {
+        "id": "(sc_client)/./app/sd/page.tsx",
         "name": "*",
         "chunks": [],
         "async": false
@@ -275,11 +267,11 @@
       ],
       "async": false
     },
-    "/Users/oyka/Documents/GitHub/sd-showcase/app/component/Img2imgImageInput.tsx": {
-      "id": "(app-client)/./app/component/Img2imgImageInput.tsx",
+    "/Users/oyka/Documents/GitHub/sd-showcase/app/redux/Features/ExtraState/ExtraSlice.ts": {
+      "id": "(app-client)/./app/redux/Features/ExtraState/ExtraSlice.ts",
       "name": "*",
       "chunks": [
-        "app/sd/page:static/chunks/app/sd/page.js"
+        "app/layout:static/chunks/app/layout.js"
       ],
       "async": false
     },
@@ -287,7 +279,7 @@
       "id": "(app-client)/./app/redux/Features/Img2imgState/Img2imgSlice.ts",
       "name": "*",
       "chunks": [
-        "app/layout:static/chunks/app/layout.js"
+        "app/sd/page:static/chunks/app/sd/page.js"
       ],
       "async": false
     },
@@ -295,23 +287,7 @@
       "id": "(app-client)/./app/redux/Features/Txt2imgState/Txt2imgSlice.ts",
       "name": "*",
       "chunks": [
-        "app/layout:static/chunks/app/layout.js"
-      ],
-      "async": false
-    },
-    "/Users/oyka/Documents/GitHub/sd-showcase/app/sd/page.tsx": {
-      "id": "(app-client)/./app/sd/page.tsx",
-      "name": "*",
-      "chunks": [
         "app/sd/page:static/chunks/app/sd/page.js"
-      ],
-      "async": false
-    },
-    "/Users/oyka/Documents/GitHub/sd-showcase/app/redux/Features/ExtraState/ExtraSlice.ts": {
-      "id": "(app-client)/./app/redux/Features/ExtraState/ExtraSlice.ts",
-      "name": "*",
-      "chunks": [
-        "app/layout:static/chunks/app/layout.js"
       ],
       "async": false
     },
@@ -330,13 +306,17 @@
         "app/layout:static/chunks/app/layout.js"
       ],
       "async": false
+    },
+    "/Users/oyka/Documents/GitHub/sd-showcase/app/sd/page.tsx": {
+      "id": "(app-client)/./app/sd/page.tsx",
+      "name": "*",
+      "chunks": [
+        "app/sd/page:static/chunks/app/sd/page.js"
+      ],
+      "async": false
     }
   },
   "entryCSSFiles": {
-    "/Users/oyka/Documents/GitHub/sd-showcase/app/sd/page": {
-      "modules": [],
-      "files": []
-    },
     "/Users/oyka/Documents/GitHub/sd-showcase/app/layout": {
       "modules": [
         "/Users/oyka/Documents/GitHub/sd-showcase/node_modules/next/font/google/target.css?{\"path\":\"app/layout.tsx\",\"import\":\"Inter\",\"arguments\":[{\"subsets\":[\"latin\"]}],\"variableName\":\"inter\"}"
@@ -344,6 +324,10 @@
       "files": [
         "static/css/app/layout.css"
       ]
+    },
+    "/Users/oyka/Documents/GitHub/sd-showcase/app/sd/page": {
+      "modules": [],
+      "files": []
     }
   }
 }
