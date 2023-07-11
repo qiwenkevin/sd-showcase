@@ -290,22 +290,23 @@ export const CommonInput = ({ mode }: { mode: number }) => {
           }}
         />
       </NumberInput>
-      <label htmlFor="cfg">CFG scale</label>
-      <input
-        type="number"
-        name="cfg"
-        id="cfg"
-        value={cfg}
-        onChange={(e) => {
-          setCfg(parseInt(e.target.value));
-          dispatch(
-            setSettings({
-              ...settings,
-              cfg_scale: parseInt(e.target.value),
-            })
-          );
-        }}
-      />
+      <NumberInput defaultValue={cfg}>
+        CFG
+        <NumberInputField
+          name="cfg"
+          id="cfg"
+          onChange={(e) => {
+            setCfg(parseInt(e.target.value));
+            dispatch(
+              setSettings({
+                ...settings,
+                cfg_scale: parseInt(e.target.value),
+              })
+            );
+          }}
+        />
+      </NumberInput>
+
       {mode == 1 && (
         <div>
           <label htmlFor="denoising">Denoising strength</label>
@@ -326,22 +327,23 @@ export const CommonInput = ({ mode }: { mode: number }) => {
           />
         </div>
       )}
-      <label htmlFor="seeds">Seeds</label>
-      <input
-        type="number"
-        name="seeds"
-        id="seeds"
-        value={seeds}
-        onChange={(e) => {
-          setSeeds(parseInt(e.target.value));
-          dispatch(
-            setSettings({
-              ...settings,
-              seed: parseInt(e.target.value),
-            })
-          );
-        }}
-      />
+
+      <NumberInput defaultValue={seeds}>
+        Seeds
+        <NumberInputField
+          name="seeds"
+          id="seeds"
+          onChange={(e) => {
+            setSeeds(parseInt(e.target.value));
+            dispatch(
+              setSettings({
+                ...settings,
+                seed: parseInt(e.target.value),
+              })
+            );
+          }}
+        />
+      </NumberInput>
     </Stack>
   );
 };

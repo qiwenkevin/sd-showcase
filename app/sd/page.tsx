@@ -13,7 +13,14 @@ import { useProgress } from "../hook/useProgress.hook";
 import { useTxt2img } from "../hook/useTxt2img.hook";
 import { useEffect, useState } from "react";
 
-import { Box, Button, ButtonGroup, HStack, Stack, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  HStack,
+  Stack,
+  VStack,
+} from "@chakra-ui/react";
 import { Select } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
@@ -22,27 +29,28 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
-} from '@chakra-ui/react'
+} from "@chakra-ui/react";
 
 const sdurl = "http://124.42.12.105:54325";
 //const sdurl = "http://119.254.88.177:7860"
 const sdfile = "/home/tang/stable-diffusion-webui";
 
-// var models = [{}];
-
-// const sdMod = async () =>{
-//   console.log("test");
-//   const res = await fetch(sdurl+ "/sdapi/v1/sd-models")
-//   const resjson = await res.json();
-
-//   console.log(resjson[0]);
-//   const retarray = [resjson[0]];
-//   for (var i = 1; i<resjson.length; i++){
-//     retarray.push(resjson[i]);
+// function getModels(){
+//   var resjson;
+//   const sdMod = async () =>{
+//     console.log("test");
+//     const res = await fetch(sdurl+ "/sdapi/v1/sd-models")
+//     resjson = await res.json();
+//     console.log(resjson[0]);
+//     return resjson;
+//     const retarray = [resjson[0]];
+//     for (var i = 1; i<resjson.length; i++){
+//       retarray.push(resjson[i]);
+//     }
+//     console.log(Array.isArray(retarray) + " retarray");
+//     return retarray;
 //   }
-//   console.log(Array.isArray(retarray) + " retarray");
-//   models = retarray;
-//   return retarray;
+//   return resjson;
 // }
 
 // console.log(models[1]);
@@ -52,7 +60,6 @@ const sdfile = "/home/tang/stable-diffusion-webui";
 // sdMod();
 
 // console.log(models[1]);
-
 
 const sdModel = [
   {
@@ -83,7 +90,19 @@ export default function Page() {
   const [loadingImages, setLoadingImages] = useState<string>("");
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [model, setModel] = useState<string>("v1-5-pruned-emaonly.safetensors");
+  const [data, setData] = useState([{title: "", model_name: "", hash: "", sha256: "", filename: "", config: null}]);
 
+  // useEffect(() => {
+  //   const sdMod = async () => {
+  //     console.log("test");
+  //     console.log(sdurl + "/sdapi/v1/sd-models")
+  //     fetch(sdurl + "/sdapi/v1/sd-models")
+  //     .then(response => response.json())
+  //     .then(data => setData(data));
+  //   };
+  //   sdMod();
+  // }, []);
+  
   const {
     images: generatedImages,
     loading,
@@ -210,24 +229,28 @@ export default function Page() {
             <>
               <Text>loading...</Text>
               {loadingImages && (
-                <Image boxSize={"sm"} objectFit={"contain"}
-                src={`data:image/png;base64,${loadingImages}`}
-                width="256"
+                <Image
+                  boxSize={"sm"}
+                  objectFit={"contain"}
+                  src={`data:image/png;base64,${loadingImages}`}
+                  width="256"
                 />
-                
               )}
             </>
           )}
 
-          {error &&
-            <Alert status='error'>
-            <AlertIcon />
-            There was an error processing your request
+          {error && (
+            <Alert status="error">
+              <AlertIcon />
+              There was an error processing your request
             </Alert>
-          }
+          )}
           {generatedImages.length > 0 &&
             generatedImages.map((image, index) => (
-              <Image boxSize={"sm"} objectFit={"contain"} align={"left"}
+              <Image
+                boxSize={"sm"}
+                objectFit={"contain"}
+                align={"left"}
                 key={index}
                 src={`data:image/png;base64,${image}`}
                 width="256"
