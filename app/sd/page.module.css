@@ -1,0 +1,8 @@
+.main{
+    display: flex;
+}
+
+.input{
+    align-self: left;
+    max-width: 800;
+}

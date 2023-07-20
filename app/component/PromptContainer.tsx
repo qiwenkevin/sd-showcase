@@ -3,6 +3,7 @@ import { useSelector } from "../hook/useSelector.hook";
 import { setSettings as setTxt2imgSettings } from "../redux/Features/Txt2imgState/Txt2imgSlice";
 import { setSettings as setImg2imgSettings } from "../redux/Features/Img2imgState/Img2imgSlice";
 import { useEffect, useState } from "react";
+import styles from "../sd/page.module.css";
 
 import { Textarea } from "@chakra-ui/react";
 import { Stack, HStack, VStack } from "@chakra-ui/react";
@@ -58,16 +59,8 @@ export const PromptContainer = (props: PromptContainerProps) => {
 
   return (
     <div>
-      <VStack align={"left"} maxW={800}>
-        <div>
-          <label htmlFor="prompt">Prompt</label>
-          <Textarea value={prompt} onChange={handleChange} />
-        </div>
-        <div>
-          <label htmlFor="negative_prompt">Negative Prompt</label>
-          <Textarea value={negative_prompt} onChange={handleNegativeChange} />
-        </div>
-      </VStack>
+        <label htmlFor="prompt">车型</label>
+        <Textarea className={styles.input} value={prompt} onChange={handleChange} />
     </div>
   );
 };

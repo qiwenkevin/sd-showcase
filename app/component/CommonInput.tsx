@@ -3,6 +3,7 @@ import { useSelector } from "../hook/useSelector.hook";
 import { setSettings as setTxt2imgSettings } from "../redux/Features/Txt2imgState/Txt2imgSlice";
 import { setSettings as setImg2imgSettings } from "../redux/Features/Img2imgState/Img2imgSlice";
 import { use, useEffect, useState } from "react";
+import styles from "../sd/page.module.css";
 
 import { Select } from "@chakra-ui/react";
 import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
@@ -197,32 +198,6 @@ export const CommonInput = ({ mode }: { mode: number }) => {
         />
       </NumberInput>
       <HStack>
-        <Checkbox
-          name="restoreFase"
-          id="restoreFase"
-          checked={restoreFase}
-          onChange={(e) => {
-            setRestoreFase(e.target.checked);
-            dispatch(
-              setSettings({ ...settings, restore_faces: e.target.checked })
-            );
-          }}
-        >
-          Restore Face
-        </Checkbox>
-        <Checkbox
-          name="tiling"
-          id="tiling"
-          checked={tiling}
-          onChange={(e) => {
-            setTiling(e.target.checked);
-            dispatch(setSettings({ ...settings, tiling: e.target.checked }));
-          }}
-        >
-          Tiling
-        </Checkbox>
-      </HStack>
-      <HStack>
         <NumberInput defaultValue={height}>
           Height
           <NumberInputField
@@ -256,56 +231,9 @@ export const CommonInput = ({ mode }: { mode: number }) => {
           />
         </NumberInput>
       </HStack>
-      <NumberInput defaultValue={batchCount}>
-        Batch Count
-        <NumberInputField
-          type="number"
-          name="batchCount"
-          id="batchCount"
-          onChange={(e) => {
-            setBatchCount(parseInt(e.target.value));
-            dispatch(
-              setSettings({
-                ...settings,
-                n_iter: parseInt(e.target.value),
-              })
-            );
-          }}
-        />
-      </NumberInput>
-      <NumberInput defaultValue={batchSize}>
-        Batch Size
-        <NumberInputField
-          type="number"
-          name="batchSize"
-          id="batchSize"
-          onChange={(e) => {
-            setBatchSize(parseInt(e.target.value));
-            dispatch(
-              setSettings({
-                ...settings,
-                batch_size: parseInt(e.target.value),
-              })
-            );
-          }}
-        />
-      </NumberInput>
-      <NumberInput defaultValue={cfg}>
-        CFG
-        <NumberInputField
-          name="cfg"
-          id="cfg"
-          onChange={(e) => {
-            setCfg(parseInt(e.target.value));
-            dispatch(
-              setSettings({
-                ...settings,
-                cfg_scale: parseInt(e.target.value),
-              })
-            );
-          }}
-        />
-      </NumberInput>
+      
+      
+      
 
       {mode == 1 && (
         <div>

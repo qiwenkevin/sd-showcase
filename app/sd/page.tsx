@@ -12,6 +12,8 @@ import { useOptions } from "../hook/useOptions.hook";
 import { useProgress } from "../hook/useProgress.hook";
 import { useTxt2img } from "../hook/useTxt2img.hook";
 import { useEffect, useState } from "react";
+import { GetModels } from "../component/GetModels";
+// import styles from './page.module.css'
 
 import {
   Box,
@@ -19,6 +21,7 @@ import {
   ButtonGroup,
   HStack,
   Stack,
+  StackDivider,
   VStack,
 } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/react";
@@ -30,6 +33,10 @@ import {
   AlertTitle,
   AlertDescription,
 } from "@chakra-ui/react";
+import { Divider } from '@chakra-ui/react'
+
+import Head from "next/head";
+import { inherits } from "util";
 
 const sdurl = "http://124.42.12.105:54325";
 //const sdurl = "http://119.254.88.177:7860"
@@ -72,12 +79,21 @@ const sdModel = [
     config: null,
   },
   {
-    title: "Realistic_Vision_V2.0-inpainting.ckpt [73c461d2cf]",
-    model_name: "Realistic_Vision_V2.0-inpainting",
-    hash: "73c461d2cf",
-    sha256: "73c461d2cf60c7f93280c34ef8649522ecd99f920f738c5d795cb1a142116b1d",
+    title: "dreamshaper_7-inpainting.safetensors",
+    model_name: "dreamshaper_7-inpainting",
+    hash: null,
+    sha256: null,
     filename:
-      sdfile + "/models/Stable-diffusion/Realistic_Vision_V2.0-inpainting.ckpt",
+      "/sys/fs/cgroup/AAA/models/Stable-diffusion/dreamshaper_7-inpainting.safetensors",
+    config: null,
+  },
+  {
+    title: "dreamshaper_7.safetensors",
+    model_name: "dreamshaper_7",
+    hash: null,
+    sha256: null,
+    filename:
+      "/sys/fs/cgroup/AAA/models/Stable-diffusion/dreamshaper_7.safetensors",
     config: null,
   },
 ];
@@ -90,7 +106,8 @@ export default function Page() {
   const [loadingImages, setLoadingImages] = useState<string>("");
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [model, setModel] = useState<string>("v1-5-pruned-emaonly.safetensors");
-  const [data, setData] = useState([{title: "", model_name: "", hash: "", sha256: "", filename: "", config: null}]);
+
+  // const [data, setData] = useState([{title: "", model_name: "", hash: "", sha256: "", filename: "", config: null}]);
 
   // useEffect(() => {
   //   const sdMod = async () => {
@@ -102,7 +119,7 @@ export default function Page() {
   //   };
   //   sdMod();
   // }, []);
-  
+
   const {
     images: generatedImages,
     loading,
@@ -187,43 +204,68 @@ export default function Page() {
     }
   }, [result]);
 
+  const style = "fish";
+
   return (
     <>
-      <Stack padding={5} align={"left"}>
-        <Text>Model</Text>
-        <HStack>
-          <Select
-            onChange={(e) => {
-              setModel(e.target.value);
-            }}
-            maxWidth={400}
-          >
-            {sdModel.map((model, index) => (
-              <option key={index} value={model.title}>
-                {model.title}
-              </option>
-            ))}
-          </Select>
-          <Button
-            maxWidth={100}
-            onClick={() => {
-              setOptions({
-                sd_model_checkpoint: model,
-              });
-            }}
-            disabled={loading5}
-          >
-            Save
-          </Button>
-        </HStack>
-
-        {loading5 && <Text>loading...</Text>}
-
-        <VStack align={"left"}>
-          <Text>txt2img generation</Text>
-          <PromptContainer mode={0} />
-          <CommonInput mode={0} />
+      <Stack align={"left"} padding={5}>
+        <HStack spacing={5} divider={<StackDivider borderColor='gray.200' />}>
+          <VStack align={"left"}>
+            <Text>Model</Text>
+            <HStack>
+              <Select
+                onChange={(e) => {
+                  setModel(e.target.value);
+                }}
+                maxWidth={400}
+              >
+                {sdModel.map((model, index) => (
+                  <option key={index} value={model.title}>
+                    {model.title}
+                  </option>
+                ))}
+              </Select>
+              <Button
+                maxWidth={100}
+                onClick={() => {
+                  setOptions({
+                    sd_model_checkpoint: model,
+                  });
+                }}
+                disabled={loading5}
+              >
+                Save
+              </Button>
+            </HStack>
+            {loading5 && <Text>loading...</Text>}
+            <PromptContainer mode={0} prompt_default={style} />
+            <CommonInput mode={0} />
+          </VStack>
+          <Box width={500}>
+            {error && (
+              <Alert status="error">
+                <AlertIcon />
+                There was an error processing your request
+              </Alert>
+            )}
+            {generatedImages.length > 0 &&
+              generatedImages.map((image, index) => (
+                <Image
+                  boxSize={"sm"}
+                  objectFit={"contain"}
+                  align={"left"}
+                  key={index}
+                  src={`data:image/png;base64,${image}`}
+                  width="256"
+                  alt={`image-${index}`}
+                />
+              ))}
+          </Box>
           <ControlNetInput mode={0} />
+        </HStack>
+      </Stack>
+      <Stack padding={5} align={"left"} className="underline">
+        <VStack align={"left"}>
           <Button onClick={handleTxt2imgClick}>txt2img</Button>
           {loading && (
             <>
@@ -238,25 +280,6 @@ export default function Page() {
               )}
             </>
           )}
-
-          {error && (
-            <Alert status="error">
-              <AlertIcon />
-              There was an error processing your request
-            </Alert>
-          )}
-          {generatedImages.length > 0 &&
-            generatedImages.map((image, index) => (
-              <Image
-                boxSize={"sm"}
-                objectFit={"contain"}
-                align={"left"}
-                key={index}
-                src={`data:image/png;base64,${image}`}
-                width="256"
-                alt={`image-${index}`}
-              />
-            ))}
         </VStack>
       </Stack>
       {/* <div>
